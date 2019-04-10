@@ -1,10 +1,8 @@
  [y,Fss] = audioread('Emmanuel.mp3');
  [y2,Fss2] = audioread('Emmanuel_1sec.mp3');
  s = spectrogram(y); %sot emmanuel el30 sania 3la b3d
- 
- figure(1)
  spectrogram(y,'yaxis');
- figure(2)
+ figure
  s2=spectrogram(y2);%sot emmanuel el sania wahda
  spectrogram(y2,'yaxis');
 %%Eman
@@ -22,7 +20,7 @@
   [e5,Fs5] = audioread('Eman5.mp3');
   E5=reshape(e5,[],1);% boso b2a, leh bareshape mn awl hena, 3lshan hwa 2D fa msh able, ele fato kano 1D, leh dol 2D
   %well 3lshan ele ba convert be mn mp4 le mp3 rag3hm kda, eshm3na awl 4,
-  %later on afhmkm b2a
+  %later on af
   SE5 = spectrogram(E5);
   [e6,Fs6] = audioread('Eman6.mp3');
   E6=reshape(e6,[],1);
