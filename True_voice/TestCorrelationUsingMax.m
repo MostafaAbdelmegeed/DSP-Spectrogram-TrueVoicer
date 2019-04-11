@@ -24,24 +24,68 @@ template2 = rgb2gray(imread(template2_file)); % Reading the image in grayscale
 template3_file = [template3_path template3_filename];  % Reading the file
 template3 = rgb2gray(imread(template3_file)); % Reading the image in grayscale
 
-correlationWithEmmanuel = normxcorr2(template1(1:700,1:800),emmanuel_spectrogram); % getting correlation matrix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-testEmmanuelSpectrogram = mean(mean(correlationWithEmmanuel));
+correlationWithEmmanuel1 = normxcorr2(template1,emmanuel_spectrogram); % getting correlation matrix
+testEmmanuelSpectrogram1 = max(max(correlationWithEmmanuel1));
 
-correlationWithEman = normxcorr2(template2(1:700,1:800),eman_spectrogram); % getting correlation matrix
-testEmanSpectrogram = mean(mean(correlationWithEman));
+correlationWithEman1 = normxcorr2(eman_spectrogram,template1); % getting correlation matrix
+testEmanSpectrogram1 = max(max(correlationWithEman1));
 
-correlationWithGamila = normxcorr2(template3(1:700,1:800),gamila_spectrogram); % getting correlation matrix
-testGamilaSpectrogram = mean(mean(correlationWithGamila));
+correlationWithGamila1 = normxcorr2(gamila_spectrogram(1:715,:),template1); % getting correlation matrix
+testGamilaSpectrogram1 = max(max(correlationWithGamila1));
 
-maximumCorrelation = max([testEmmanuelSpectrogram,testEmanSpectrogram,testGamilaSpectrogram]);
-if maximumCorrelation == testEmmanuelSpectrogram
+maximumCorrelation1 = max([testEmmanuelSpectrogram1,testEmanSpectrogram1,testGamilaSpectrogram1]);
+if maximumCorrelation1 == testEmmanuelSpectrogram1
     x = 'Emmanuel';
 end
-if maximumCorrelation == testEmanSpectrogram
+if maximumCorrelation1 == testEmanSpectrogram1
     x = 'Eman';
 end
-if maximumCorrelation == testGamilaSpectrogram
+if maximumCorrelation1 == testGamilaSpectrogram1
     x = 'Gamila';
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+correlationWithEmmanuel2 = normxcorr2(emmanuel_spectrogram(:,1:847),template2); % getting correlation matrix
+testEmmanuelSpectrogram2 = max(max(correlationWithEmmanuel2));
+
+correlationWithEman2 = normxcorr2(eman_spectrogram,template2); % getting correlation matrix
+testEmanSpectrogram2 = max(max(correlationWithEman2));
+
+correlationWithGamila2 = normxcorr2(gamila_spectrogram,template2); % getting correlation matrix
+testGamilaSpectrogram2 = max(max(correlationWithGamila2));
+
+maximumCorrelation2 = max([testEmmanuelSpectrogram2,testEmanSpectrogram2,testGamilaSpectrogram2]);
+if maximumCorrelation2 == testEmmanuelSpectrogram2
+    y = 'Emmanuel';
+end
+if maximumCorrelation2 == testEmanSpectrogram2
+    y = 'Eman';
+end
+if maximumCorrelation2 == testGamilaSpectrogram2
+    y = 'Gamila';
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+correlationWithEmmanuel3 = normxcorr2(template3,emmanuel_spectrogram); % getting correlation matrix
+testEmmanuelSpectrogram3 = max(max(correlationWithEmmanuel3));
+
+correlationWithEman3 = normxcorr2(eman_spectrogram,template3); % getting correlation matrix
+testEmanSpectrogram3 = max(max(correlationWithEman3));
+
+correlationWithGamila3 = normxcorr2(gamila_spectrogram(:,1:838),template3); % getting correlation matrix
+testGamilaSpectrogram3 = max(max(correlationWithGamila3));
+
+maximumCorrelation3 = max([testEmmanuelSpectrogram3,testEmanSpectrogram3,testGamilaSpectrogram3]);
+if maximumCorrelation3 == testEmmanuelSpectrogram3
+    z = 'Emmanuel';
+end
+if maximumCorrelation3 == testEmanSpectrogram3
+    z = 'Eman';
+end
+if maximumCorrelation3 == testGamilaSpectrogram3
+    z = 'Gamila';
+end
