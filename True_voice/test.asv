@@ -1,4 +1,0 @@
-[s,Fss] = audioread('gamila1.mp3');
-y= spectrogram(s);
-spectrogram(s,[],[],[],Fss,'yaxis');
-saveas(gcf,'Gamila template.png');
