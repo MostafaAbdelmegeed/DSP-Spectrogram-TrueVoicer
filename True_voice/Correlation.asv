@@ -23,8 +23,8 @@ normalized_correlation4 = normxcorr2(template4,spectrogram4); % getting correlat
 correlation_factor_1 = normalized_correlation1(row1,column1);
 correlation_factor_2 = normalized_correlation2(row2,column2);
 correlation_factor_3 = normalized_correlation3(row3,column3);
-correlation_factor_4 = normalized_correlation4(row4,column4);
-correlation_factors=[ correlation_factor_1; correlation_factor_2; correlation_factor_3; correlation_factor_4 ];
+correlation_factor_4 = normalized_correlation3(row3,column3);
+correlation_factors=[ correlation_factor_1; correlation_factor_2; correlation_factor_3 ];
 [row, column] = find(correlation_factors == max(correlation_factors));
 
 

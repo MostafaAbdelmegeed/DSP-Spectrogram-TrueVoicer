@@ -56,35 +56,27 @@
 
 template1=template;
 template2=template;
-template3=template;
-template4=template;
+templat
 
 if size(template1,1) > size(spectrogram1,1)
-    template1(size(spectrogram1,1)+1:size(template1,1),:)=[];
+    template1= template(1:size(spectrogram1,1),:);
 end
 if size(template1,2) > size(spectrogram1,2)
-    template1(:,size(spectrogram1,2)+1:size(template1,2))=[];
+    template1=template(:,1:size(spectrogram1,2));
 end
 
 if size(template2,1) > size(spectrogram2,1)
-    template2(size(spectrogram2,1)+1:size(template2,1),:)=[];
+    template2= template(1:size(spectrogram2,1),:);
 end
 if size(template2,2) > size(spectrogram2,2)
-    template2(:,size(spectrogram2,2)+1:size(template2,2))=[];
+    template2=template(:,1:size(spectrogram2,2));
 end
 
 if size(template3,1) > size(spectrogram3,1)
-    template3(size(spectrogram3,1)+1:size(template3,1),:)=[];
+    template3= template(1:size(spectrogram3,1),:);
 end
 if size(template3,2) > size(spectrogram3,2)
-    template3(:,size(spectrogram3,2)+1:size(template3,2))=[];
-end
-
-if size(template4,1) > size(spectrogram4,1)
-    template4(size(spectrogram4,1)+1:size(template4,1),:)=[];
-end
-if size(template4,2) > size(spectrogram4,2)
-    template4(:,size(spectrogram4,2)+1:size(template4,2))=[];
+    template3=template(:,1:size(spectrogram3,2));
 end
 
 
