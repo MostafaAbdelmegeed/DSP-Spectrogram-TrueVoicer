@@ -56,15 +56,21 @@ function TrueVoicer_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 
 
-handles.image1 = imread('Eman template.png');
+handles.spectrogram1 = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Spectrograms\Eman spectrogram.png');
 axes(handles.axes7);
-imshow(handles.image1);
-handles.image2 = imread('Emmanuel template.png');
+imshow(handles.spectrogram1);
+handles.spectrogram2 = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Spectrograms\Mano spectrogram.png');
 axes(handles.axes1);
-imshow(handles.image2);
-handles.image3 = imread('Gamila template.png');
+imshow(handles.spectrogram2);
+handles.spectrogram3 = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Spectrograms\Gamila spectrogram.png');
 axes(handles.axes9);
-imshow(handles.image3);
+imshow(handles.spectrogram3);
+handles.spectrogram4 = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Spectrograms\Moustafa spectrogram.png');
+axes(handles.axes8);
+imshow(handles.spectrogram4);
+
+
+
 % Update handles structure
 guidata(hObject, handles);
 
@@ -120,10 +126,104 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[handles.file1,handles.filename1]= uigetfile('*.ogg;*.mp3');
-if ( handles.file1 ~= 0)
-    [handles.audio,handles.fs] = audioread([handles.filename1,handles.file1]);
+handles.file = 0;
+handles.filename = 0;
+[handles.filename,handles.path]= uigetfile('*.jpg;*.jpeg;*.png','Select Template');
+if  handles.filename
+    
+    handles.file = [handles.path handles.filename];  % Reading the file
+    axes(handles.axes5);
+    imshow(imread(handles.file));
+    set(handles.browse_path,'String',handles.file);
+    template = rgb2gray(imread(handles.file)); % Reading the image in grayscale
+    [template1, template2, template3, template4] = cropping(template,hObject, eventdata, handles);
+    identifier = correlation(template1,template2,template3,template4,hObject, eventdata, handles);
+    if identifier == 1
+        set(handles.text3,'String','IT IS EMAN');
+        user = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Users Pictures\Eman.jpeg');
+        axes(handles.axes6);
+        imshow(user);
+    elseif identifier == 2
+        set(handles.text3,'String','IT IS EMMANUEL');
+        user = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Users Pictures\Emmanuel.jpeg');
+        axes(handles.axes6);
+        imshow(user);
+    elseif identifier == 3
+        set(handles.text3,'String','IT IS GAMILA');
+        user = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Users Pictures\Gamila.jpg');
+        axes(handles.axes6);
+        imshow(user);
+    else 
+        set(handles.text3,'String','IT IS MOUSTAFA');
+        user = imread('C:\Users\mosta\Documents\GitHub\DSP-Spectroscopy-TrueVoicer\Users Pictures\Asaad.jpeg');
+        axes(handles.axes6);
+        imshow(user);
+    end
+else
+    errordlg('No Template selected', 'No Files selected'); % Error msg if no spectrograph is selected
 end 
+
+guidata(hObject, handles);
+
+function [template1,template2,template3,template4] = cropping(template,hObject, eventdata, handles)
+    template1 = template;
+    template2 = template;
+    template3 = template;
+    template4 = template;
+
+    if size(template1,1) > size(handles.spectrogram1,1)
+        template1(size(handles.spectrogram1,1)+1:size(template1,1),:)=[];
+    end
+    if size(template1,2) > size(handles.spectrogram1,2)
+        template1(:,size(handles.spectrogram1,2)+1:size(template1,2))=[];
+    end
+
+    if size(template2,1) > size(handles.spectrogram2,1)
+        template2(size(handles.spectrogram2,1)+1:size(template2,1),:)=[];
+    end
+    if size(template2,2) > size(handles.spectrogram2,2)
+        template2(:,size(handles.spectrogram2,2)+1:size(template2,2))=[];
+    end
+
+    if size(template3,1) > size(handles.spectrogram3,1)
+        template3(size(handles.spectrogram3,1)+1:size(template3,1),:)=[];
+    end
+    if size(template3,2) > size(handles.spectrogram3,2)
+        template3(:,size(handles.spectrogram3,2)+1:size(template3,2))=[];
+    end
+
+    if size(template4,1) > size(handles.spectrogram4,1)
+        template4(size(handles.spectrogram4,1)+1:size(template4,1),:)=[];
+    end
+    if size(template4,2) > size(handles.spectrogram4,2)
+        template4(:,size(handles.spectrogram4,2)+1:size(template4,2))=[];
+    end
+    guidata(hObject, handles);
+    
+ function identifier = correlation(template1,template2,template3,template4,hObject, eventdata, handles)
+     normalized_correlation1 = normxcorr2(template1,rgb2gray(handles.spectrogram1)); % getting correlation matrix
+     [row1, column1] = find(normalized_correlation1 == max(max(normalized_correlation1))); % getting index of maximum correlation
+     
+     normalized_correlation2 = normxcorr2(template2,rgb2gray(handles.spectrogram2)); % getting correlation matrix
+     [row2, column2] = find(normalized_correlation2 == max(max(normalized_correlation2))); % getting index of maximum correlation
+     
+     normalized_correlation3 = normxcorr2(template3,rgb2gray(handles.spectrogram3)); % getting correlation matrix
+     [row3, column3] = find(normalized_correlation3 == max(max(normalized_correlation3))); % getting index of maximum correlation
+     
+     normalized_correlation4 = normxcorr2(template4,rgb2gray(handles.spectrogram4)); % getting correlation matrix
+     [row4, column4] = find(normalized_correlation4 == max(max(normalized_correlation4))); % getting index of maximum correlation
+     
+     
+     correlation_factor_1 = normalized_correlation1(row1,column1);
+     correlation_factor_2 = normalized_correlation2(row2,column2);
+     correlation_factor_3 = normalized_correlation3(row3,column3);
+     correlation_factor_4 = normalized_correlation4(row4,column4);
+     correlation_factors=[ correlation_factor_1; correlation_factor_2; correlation_factor_3; correlation_factor_4 ];
+     [identifier, column] = find(correlation_factors == max(correlation_factors));
+     guidata(hObject, handles);
+     
+
+
 % handles.image1 = imread('asaad.jpeg');
 % axes(handles.axes5);
 % imshow(handles.image1);
