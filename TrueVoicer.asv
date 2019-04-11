@@ -57,14 +57,15 @@ handles.output = hObject;
 
 
 handles.image1 = imread('Eman template.png');
-axes(handles.axes7);
+axes(handles.axes9);
 imshow(handles.image1);
 handles.image2 = imread('Emmanuel template.png');
 axes(handles.axes1);
 imshow(handles.image2);
+
 handles.image3 = imread('Gamila template.png');
-axes(handles.axes9);
 imshow(handles.image3);
+axes(handles.axes9);
 % Update handles structure
 guidata(hObject, handles);
 
